@@ -1,0 +1,186 @@
+---
+description: Global rules for SPC flooring website (Next.js + TypeScript + Tailwind CSS)
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+You are an expert in **TypeScript, React, Next.js (App Router) and Tailwind CSS**.
+You are helping build a **marketing/catalog website for SPC interior flooring**, optimized for clarity, speed, and future scalability (future e-commerce optional).
+
+---
+
+## 🧠 GENERAL PRINCIPLES
+
+- Prefer simple, composable components over complex ones.
+- Use the Single Responsibility Principle for all components, hooks, and utilities.
+- Optimize for readability, maintainability, performance, and clean architecture.
+- Follow semantic HTML and solid accessibility practices.
+
+---
+
+## 🧱 TECH STACK & ARCHITECTURE
+
+- Use **Next.js (App Router)** with **TypeScript**.
+- Use **Tailwind CSS** as the primary styling tool.
+- Project structure:
+
+  - `/app/layout.tsx` — global layout, fonts, meta tags, body wrapper.
+  - `/app/page.tsx` — Home page.
+  - `/app/products/page.tsx` — product catalog.
+  - Optional: `/app/contact/page.tsx`.
+  - `/components/` — reusable components:
+    - `Header.tsx`, `Footer.tsx`
+    - `Hero.tsx`
+    - `Section.tsx`
+    - `ProductCard.tsx`
+    - `ProductGrid.tsx`
+    - `WhatsAppButton.tsx`
+  - `/data/products.ts` — typed array of product data.
+  - `/public/images/products/*` — product images.
+
+- Use semantic layout elements: `<header>`, `<main>`, `<section>`, `<footer>`, `<nav>`.
+
+---
+
+## 🎨 UI & TAILWIND RULES
+
+- Use Tailwind CSS utilities for layout, spacing, sizing, responsive design, and typography.
+- Avoid adding custom CSS unless necessary.
+- Follow a clean minimalist design:
+  - Neutral backgrounds (light gray or beige).
+  - 1–2 accent colors (dark green, petroleum blue, etc.).
+- Prefer:
+  - mobile-first responsive classes,
+  - grid and flex layouts,
+  - consistent spacing (`p-6`, `gap-6`, etc.).
+- Extract UI primitives into reusable components (e.g., `Section`).
+
+---
+
+## 📦 DOMAIN MODEL (SPC PRODUCTS)
+
+Create and use a strong typed model:
+
+```ts
+export interface Product {
+  id: string;
+  name: string;
+  code: string;
+  collection?: string;
+  tone?: string;
+  format?: string;
+  thickness?: string;
+  usage?: "residential" | "commercial" | "both";
+  shortDescription?: string;
+  details?: string[];
+  image?: string;
+}
+
+## 🧾 NAMING CONVENTIONS
+
+- **English for all code identifiers**:
+  - Components
+  - Functions
+  - Props
+  - Types & interfaces
+  - Variables & constants
+  - File names & folder names
+
+- **Spanish is allowed only for UI-visible text** (labels, titles, paragraphs, descriptions).
+
+### 🔤 Patterns
+
+- **PascalCase** → components & types
+  - Example: `ProductCard`, `ProductGrid`, `Product`
+
+- **camelCase** → variables & functions
+  - Example: `getProductById`, `isLoading`, `handleClick`
+
+- **SCREAMING_SNAKE_CASE** → constants
+  - Example: `WHATSAPP_PHONE`, `SITE_TITLE`
+
+- **Directories** → lowercase and hyphenated
+  - Example: `product-card/`, `product-grid/`, `hero-section/`
+
+### ✔️ Use descriptive names (Reveal Intent)
+
+- **Good:** `getProductById`, `formatProductName`, `filterProductsByUsage`
+- **Bad:** `getData`, `helperFn`, `process`
+
+## 📲 WHATSAPP & CTA RULES
+
+- Create a reusable `WhatsAppButton` component that:
+  - Receives `message?: string`.
+  - Builds the URL:
+    `https://wa.me/<PHONE>?text=${encodeURIComponent(message)}`
+  - Uses `target="_blank"` and `rel="noopener noreferrer"`.
+
+- WhatsApp entry points must appear in:
+  - Hero section (main CTA).
+  - Product cards (“Consultar por este modelo”).
+  - Optional floating button (mobile and desktop).
+
+- Spanish messages are allowed inside WhatsApp URLs.
+
+## ✨ SEO RULES
+
+- Each page must define:
+  - `<title>` tag.
+  - `<meta name="description">`
+
+- Only **one `<h1>` per page**.
+
+- Use clear semantic hierarchy:
+  - `<h2>` for section titles.
+  - `<h3>` for subsections.
+
+### Home Page must include:
+- Hero section explaining the product offering (SPC flooring).
+- Benefits of SPC flooring.
+- The purchase/consultation process.
+- Highlighted products.
+- Final WhatsApp CTA.
+
+### Guidelines:
+- Avoid generic marketing text.
+- Prefer specific, benefit-oriented content (durability, water resistance, easy installation, etc.).
+
+## 🎨 UI & TAILWIND RULES
+
+- Use Tailwind CSS utility classes for layout, spacing, typography, and responsiveness.
+- Avoid custom CSS unless strictly necessary.
+- Follow a minimalist, clean aesthetic:
+  - Neutral backgrounds (light gray, beige).
+  - 1–2 accent colors (dark green, petroleum blue, charcoal).
+- Prefer:
+  - Mobile-first responsive classes (`sm:`, `md:`, `lg:`).
+  - Flexbox and CSS Grid layouts.
+  - Consistent spacing (`p-6`, `gap-6`, `mx-auto`, `max-w-5xl`).
+
+### Componentization:
+- Extract reusable UI primitives (e.g., `Section`, `Container`, `Button`).
+- Keep components small and composable.
+
+## 🧱 SOLID PRINCIPLES (Frontend Adapted)
+
+### S — Single Responsibility
+- Components and hooks must have only one reason to change.
+- Extract subcomponents or custom hooks when complexity grows.
+
+### O — Open/Closed
+- Components should be extendable via props and composition.
+- Avoid modifying internal logic repeatedly.
+
+### L — Liskov Substitution
+- Maintain consistent prop contracts across interchangeable components.
+- Avoid breaking component compatibility.
+
+### I — Interface Segregation
+- Keep prop interfaces small and specific.
+- Do not force components to accept props they don't need.
+
+### D — Dependency Inversion
+- Business logic should live in hooks or utilities.
+- Components should depend on abstractions, not concrete implementations.
+```
